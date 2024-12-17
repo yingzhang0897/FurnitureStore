@@ -1,0 +1,27 @@
+@page "/shop"
+@inject FurnitureStore.Data.ProductService ProductService
+
+<h1>Shop Our Furniture</h1>
+
+@if (products == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="product-grid">
+        @foreach (var product in products)
+        {
+            <ProductCard Product="product" />
+        }
+    </div>
+}
+
+@code {
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
+}
